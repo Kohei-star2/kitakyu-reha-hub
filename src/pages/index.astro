@@ -1,0 +1,140 @@
+---
+import Base from '../layouts/Base.astro';
+import EventCard from '../components/EventCard.astro';
+import { getUpcoming, getPast, formatDate } from '../lib/events';
+
+const upcoming = await getUpcoming();
+const next = upcoming[0];
+const later = upcoming.slice(1, 3);
+const reports = (await getPast()).slice(0, 3);
+---
+<Base>
+  <section class="hero">
+    <div class="container">
+      <span class="eyebrow">KITAKYUSHU REHABILITATION HUB</span>
+      <h1>顔の見える、<br /><em>ほんとうの連携</em>を。<br />北九州から。</h1>
+      <p class="hero-lead">
+        北九州リハビリテーションハブは、北九州市の医療職が職種や所属を越えてつながるための任意団体です。
+        哲学対話「本質観取の会」を通して、顔の見える関係と、ほんとうの地域連携をつくっています。
+      </p>
+      <div class="hero-actions">
+        <a href="/events" class="btn">次回の会に申し込む</a>
+        <a href="/honshitsu" class="btn btn-outline">本質観取の会とは</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">NEXT</span>
+        <h2>次回の本質観取の会</h2>
+      </div>
+      {next ? (
+        <div class="grid-2">
+          <EventCard event={next} />
+          <div>
+            {later.length > 0 ? (
+              <>
+                <h3>その後の予定</h3>
+                <ul>
+                  {later.map((e) => <li>{formatDate(e.data.date)}　{e.data.question}</li>)}
+                </ul>
+              </>
+            ) : (
+              <p>次回以降の日程は決まり次第お知らせします。</p>
+            )}
+            <a href="/events" class="more" style="display:inline-block;">開催案内をすべて見る →</a>
+          </div>
+        </div>
+      ) : (
+        <div class="card"><p style="margin:0;">次回の日程は決まり次第お知らせします。</p></div>
+      )}
+    </div>
+  </section>
+
+  <section class="section-mist">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">VISION</span>
+        <h2>私たちが目指すこと</h2>
+        <p>北九州市の医療職が、顔の見える「ほんとうの連携」ができるようになること。</p>
+      </div>
+      <div class="grid-3">
+        <div class="card">
+          <div class="value-num">01</div>
+          <h3>顔の見える関係</h3>
+          <p>名前と職種を知っているだけでなく、「この人ならこう考える」と想像できる関係を地域に増やします。</p>
+        </div>
+        <div class="card">
+          <div class="value-num">02</div>
+          <h3>職種を越えた対話</h3>
+          <p>リハビリ職、看護師、医師、相談員。立場の違う人が同じ問いを囲み、対等に語り合います。</p>
+        </div>
+        <div class="card">
+          <div class="value-num">03</div>
+          <h3>ほんとうの地域連携</h3>
+          <p>書類や電話だけのつながりではなく、互いの考え方を分かり合ったうえでの連携をめざします。</p>
+        </div>
+      </div>
+      <p class="more"><a href="/about">理念・団体紹介を詳しく →</a></p>
+    </div>
+  </section>
+
+  <section>
+    <div class="container grid-2" style="align-items:center;">
+      <div>
+        <span class="eyebrow">DIALOGUE</span>
+        <h2>本質観取の会とは</h2>
+        <p>
+          「連携とは何か」「回復とは何か」。ふだん当たり前に使っている言葉について、
+          参加者それぞれの体験を持ち寄り、みんなが納得できる“本質”を言葉にしていく哲学対話です。
+        </p>
+        <p>正解を教わる場ではありません。哲学の知識も必要ありません。</p>
+        <a href="/honshitsu" class="btn btn-outline">詳しく見る</a>
+      </div>
+      <ol class="steps">
+        <li><h3>問いを決める</h3><p>例：「顔の見える関係」とは何か</p></li>
+        <li><h3>体験を出し合う</h3><p>それぞれの現場での具体的なエピソードを語ります</p></li>
+        <li><h3>本質を言葉にする</h3><p>体験に共通することを、みんなで一文にまとめます</p></li>
+        <li><h3>振り返る</h3><p>気づいたことを共有して終わります</p></li>
+      </ol>
+    </div>
+  </section>
+
+  {reports.length > 0 && (
+    <section class="section-mint">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">REPORT</span>
+          <h2>開催報告</h2>
+        </div>
+        <div class="grid-3">
+          {reports.map((r) => (
+            <a href={`/reports/${r.id}`} class="card" style="text-decoration:none;color:inherit;">
+              <p style="margin:0 0 6px;font-size:0.85rem;color:var(--ink-soft);">{formatDate(r.data.date)}</p>
+              <p class="event-question" style="font-size:1.1rem;">{r.data.question}</p>
+              <p style="margin:8px 0 0;font-size:0.9rem;">{r.data.title}</p>
+            </a>
+          ))}
+        </div>
+        <p class="more"><a href="/reports">開催報告をすべて見る →</a></p>
+      </div>
+    </section>
+  )}
+
+  <section>
+    <div class="container grid-2">
+      <div class="card">
+        <h3>初めての方へ</h3>
+        <p>医療職の方はもちろん、学生の方や一般の方も参加できます。哲学の知識は必要ありません。</p>
+        <a href="/faq">参加の流れとよくある質問 →</a>
+      </div>
+      <div class="card">
+        <h3>お問い合わせ</h3>
+        <p>会についてのご質問、取材や協働のご相談はお気軽にどうぞ。</p>
+        <a href="/contact">お問い合わせ方法を見る →</a>
+      </div>
+    </div>
+  </section>
+</Base>

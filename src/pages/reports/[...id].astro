@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import { formatDate } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const all = await getCollection('events');
+  return all.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const e = entry.data;
+---
+<Base title={`${e.question}｜開催報告`}>
+  <div class="page-head">
+    <div class="narrow">
+      <span class="eyebrow">REPORT</span>
+      <p style="margin:0 0 4px;">{formatDate(e.date)}　{e.format}</p>
+      <h1>{e.question}</h1>
+      <p>{e.title}</p>
+    </div>
+  </div>
+  <section>
+    <article class="narrow prose">
+      {e.sample && <p class="notice">この記事はサンプルです。公開前に実際の報告へ書き換えてください。</p>}
+      <Content />
+      <p class="more"><a href="/reports">← 開催報告の一覧へ</a></p>
+    </article>
+  </section>
+</Base>

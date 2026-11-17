@@ -1,0 +1,90 @@
+---
+import '../styles/global.css';
+import { SITE } from '../site.config';
+
+interface Props { title?: string; description?: string; }
+const { title, description = SITE.description } = Astro.props;
+const pageTitle = title ? `${title}｜${SITE.name}` : `${SITE.name}｜顔の見える、ほんとうの連携を。`;
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const nav = [
+  { href: '/about', label: '理念・団体紹介' },
+  { href: '/honshitsu', label: '本質観取の会とは' },
+  { href: '/events', label: '開催案内' },
+  { href: '/reports', label: '開催報告' },
+  { href: '/faq', label: '初めての方へ' },
+  { href: '/contact', label: 'お問い合わせ' },
+];
+const year = new Date().getFullYear();
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta name="theme-color" content="#3ba9d9" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container header-inner">
+        <a href="/" class="logo" aria-label={`${SITE.name} トップへ`}>
+          <span class="logo-main">北九州<span>リハビリテーション</span>ハブ</span>
+          <span class="logo-sub">KITAKYUSHU REHABILITATION HUB</span>
+        </a>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">メニュー</button>
+        <nav id="site-nav" class="nav" aria-label="メインメニュー">
+          {nav.map((item) => (
+            <a href={item.href} aria-current={path.startsWith(item.href) ? 'page' : undefined}>{item.label}</a>
+          ))}
+          <a href="/events" class="btn btn-small" style="color:#fff;margin-left:8px;">次回の会に申し込む</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <section class="cta-band">
+      <div class="narrow">
+        <h2>まずは一度、対話の場へ。</h2>
+        <p>医療職の方も、そうでない方も参加できます。<br />職種を越えて、同じ問いを一緒に考えてみませんか。</p>
+        <a href="/events" class="btn">次回の会に申し込む</a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <strong style="color:#fff;font-size:1rem;">{SITE.name}</strong><br />
+            {SITE.area}を拠点に活動する任意団体（{SITE.founded}設立）
+          </div>
+          <ul class="footer-nav">
+            {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+            <li><a href="/privacy">プライバシーポリシー</a></li>
+          </ul>
+        </div>
+        <p class="copyright">© {year} {SITE.name}</p>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.querySelector('.menu-toggle');
+      const nav = document.getElementById('site-nav');
+      btn?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('is-open');
+        btn.setAttribute('aria-expanded', String(!!open));
+        btn.textContent = open ? '閉じる' : 'メニュー';
+      });
+    </script>
+  </body>
+</html>

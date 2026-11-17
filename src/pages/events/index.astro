@@ -1,0 +1,39 @@
+---
+import Base from '../../layouts/Base.astro';
+import EventCard from '../../components/EventCard.astro';
+import { getUpcoming } from '../../lib/events';
+const upcoming = await getUpcoming();
+---
+<Base title="開催案内" description="本質観取の会の開催日時・場所・テーマと申込方法のご案内です。">
+  <div class="page-head">
+    <div class="container">
+      <span class="eyebrow">EVENTS</span>
+      <h1>開催案内</h1>
+      <p>本質観取の会の日程と申込方法です。どなたでも参加できます。</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      {upcoming.length > 0 ? (
+        <div class="grid-2">
+          {upcoming.map((e) => <EventCard event={e} />)}
+        </div>
+      ) : (
+        <div class="card"><p style="margin:0;">現在募集中の会はありません。次回の日程は決まり次第お知らせします。</p></div>
+      )}
+    </div>
+  </section>
+
+  <section class="section-mist">
+    <div class="narrow">
+      <h2>申込の流れ</h2>
+      <ol class="steps">
+        <li><h3>申込フォームに入力</h3><p>各回の「この会に申し込む」ボタンから、お名前と連絡先を送ってください。</p></li>
+        <li><h3>ご案内メールを受け取る</h3><p>会場の詳細やオンラインのURLをお送りします。</p></li>
+        <li><h3>当日参加</h3><p>持ち物は特にありません。気軽にお越しください。</p></li>
+      </ol>
+      <p class="more">はじめての方は <a href="/faq">初めての方へ・Q&amp;A</a> もご覧ください。</p>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,79 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../site.config';
+---
+<Base title="理念・団体紹介">
+  <div class="page-head">
+    <div class="container">
+      <span class="eyebrow">ABOUT</span>
+      <h1>理念・団体紹介</h1>
+      <p>私たちが何を目指し、なぜ哲学対話をしているのか。</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="narrow">
+      <span class="eyebrow">VISION</span>
+      <h2>北九州市の医療職が、<br />顔の見える「ほんとうの連携」ができるように。</h2>
+      <p>
+        地域で患者さんを支えるには、病院、施設、在宅と、たくさんの職種がつながる必要があります。
+        けれど実際の連携は、書類や電話のやりとりだけで終わってしまうことも少なくありません。
+      </p>
+      <p>
+        私たちが目指すのは、相手の名前や職種を知っているだけの関係ではなく、
+        「この人ならこう考えるだろう」と互いの考え方まで分かり合える、顔の見える関係です。
+        その関係があってはじめて、ほんとうの地域連携が生まれると考えています。
+      </p>
+    </div>
+  </section>
+
+  <section class="section-mist">
+    <div class="narrow">
+      <span class="eyebrow">WHY DIALOGUE</span>
+      <h2>なぜ、哲学対話なのか</h2>
+      <p>
+        「連携」「回復」「寄り添う」。同じ言葉を使っていても、職種や経験によって思い浮かべるものは少しずつ違います。
+        そのずれに気づかないまま連携しようとすると、すれ違いが起きます。
+      </p>
+      <p>
+        本質観取の会では、こうした言葉の意味を、職種を越えて一緒に問い直します。
+        自分の体験を語り、相手の体験を聴くうちに、互いの考え方が見えてきます。
+        対話を重ねることが、そのまま顔の見える関係づくりになっています。
+      </p>
+      <a href="/honshitsu" class="btn btn-outline">本質観取の会とは</a>
+    </div>
+  </section>
+
+  <section>
+    <div class="narrow">
+      <span class="eyebrow">PROFILE</span>
+      <h2>団体概要</h2>
+      <table class="info-table">
+        <tbody>
+          <tr><th>名称</th><td>{SITE.name}</td></tr>
+          <tr><th>形態</th><td>任意団体</td></tr>
+          <tr><th>設立</th><td>{SITE.founded}</td></tr>
+          <tr><th>代表</th><td>{SITE.representatives.join('、')}</td></tr>
+          <tr><th>活動エリア</th><td>{SITE.area}</td></tr>
+          <tr><th>主な活動</th><td>哲学対話「本質観取の会」の開催</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-mint">
+    <div class="narrow">
+      <span class="eyebrow">MEMBERS</span>
+      <h2>代表者</h2>
+      <div class="grid-2">
+        {SITE.representatives.map((name) => (
+          <div class="card">
+            <h3 style="margin-bottom:4px;">{name}</h3>
+            <p style="margin:0;color:var(--ink-soft);font-size:0.92rem;">共同代表</p>
+            <p style="margin:12px 0 0;font-size:0.92rem;">（職種・所属・ひとことを準備中）</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
