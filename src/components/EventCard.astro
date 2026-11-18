@@ -1,6 +1,6 @@
 ---
 import type { EventEntry } from '../lib/events';
-import { formatDate } from '../lib/events';
+import { whenLabel, questionLabel } from '../lib/events';
 
 interface Props { event: EventEntry; }
 const { event } = Astro.props;
@@ -10,14 +10,13 @@ const cls = e.status === '募集中' ? 'tag-open' : e.status === '満席' ? 'tag
 <article class="event-card">
   <div class="tags">
     <span class={`tag ${cls}`}>{e.status}</span>
-    <span class="tag">{e.format}</span>
-    {e.sample && <span class="tag tag-sample">サンプル</span>}
+    {e.format && <span class="tag">{e.format}</span>}
   </div>
-  <p class="event-question">{e.question}</p>
+  <p class="event-question">{questionLabel(event)}</p>
   <dl class="event-meta">
-    <dt>回</dt><dd>{e.title}</dd>
-    <dt>日時</dt><dd>{formatDate(e.date)} {e.time}</dd>
-    <dt>場所</dt><dd>{e.place}</dd>
+    <dt>開催</dt><dd>{e.title}</dd>
+    <dt>日時</dt><dd>{whenLabel(event)}</dd>
+    <dt>場所</dt><dd>{e.place ?? '決まり次第お知らせします'}</dd>
     {e.capacity && (<><dt>定員</dt><dd>{e.capacity}名</dd></>)}
     {e.fee && (<><dt>参加費</dt><dd>{e.fee}</dd></>)}
   </dl>

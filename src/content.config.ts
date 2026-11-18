@@ -5,18 +5,18 @@ import { glob } from 'astro/loaders';
 const events = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
   schema: z.object({
-    title: z.string(),            // 例: 第1回 本質観取の会
-    question: z.string(),         // 問い（テーマ）例: 「連携」とは何か
-    date: z.string(),             // 開催日 YYYY-MM-DD
-    time: z.string(),             // 例: 14:00-16:30
-    format: z.enum(['対面', 'オンライン', '対面＋オンライン']),
-    place: z.string(),            // 会場名やZoomなど
+    number: z.number(),                // 第何回か
+    title: z.string(),                 // 例: 第1回 本質観取の会
+    question: z.string().optional(),   // 問い（テーマ）。未定なら書かない
+    date: z.string().optional(),       // YYYY-MM-DD。日にち未定なら YYYY-MM、未定なら書かない
+    time: z.string().optional(),       // 例: 14:00-16:30
+    format: z.enum(['対面', 'オンライン', '対面＋オンライン']).optional(),
+    place: z.string().optional(),
     capacity: z.number().optional(),
-    fee: z.string().optional(),   // 例: 500円、無料
+    fee: z.string().optional(),
     applyUrl: z.string().optional(),
-    status: z.enum(['募集中', '満席', '終了']),
+    status: z.enum(['準備中', '募集中', '満席', '終了']),
     tags: z.array(z.string()).default([]),
-    sample: z.boolean().default(false), // サンプルデータの印（本番前に削除）
   }),
 });
 

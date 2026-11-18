@@ -12,30 +12,27 @@ npm run dev     # http://localhost:4321
 ## よく行う更新
 
 ### 開催情報を追加する
-`src/content/events/` に Markdown ファイルを1つ追加します（例: `2027-01-23.md`）。
+`src/content/events/` に Markdown ファイルを1つ追加します（例: `04.md`）。
 
 ```markdown
 ---
-title: 第1回 本質観取の会
-question: 「連携」とは何か
-date: "2027-01-23"
-time: "14:00〜16:30"
-format: 対面            # 対面 / オンライン / 対面＋オンライン
+number: 4
+title: 第4回 本質観取の会
+question: 「連携」とは何か      # 未定なら書かない（テーマは近日公開と表示）
+date: "2027-03-20"            # 日にち未定なら "2027-03"、まったく未定なら書かない
+time: "14:00-16:30"
+format: 対面                  # 対面 / オンライン / 対面＋オンライン
 place: 〇〇市民センター 会議室
 capacity: 12
 fee: 500円
-applyUrl: "https://forms.gle/..."   # 申込フォームのURL
-status: 募集中          # 募集中 / 満席 / 終了
+applyUrl: "https://forms.gle/..."
+status: 募集中                # 準備中 / 募集中 / 満席 / 終了
 tags: [連携]
 ---
 ```
 
-- 開催日が過ぎた会、または `status: 終了` の会は自動で「開催報告」に移ります。
-- 開催後は本文（`---` の下）に報告を書き足してください。書き方は `sample-00.md` を参考に。
-- サイトはビルド時点の日付で振り分けるので、開催日を過ぎたら一度デプロイし直してください（Vercel なら push するだけ）。
-
-### サンプルを消す
-`src/content/events/sample-00.md` と `sample-01.md` はサンプルです。公開前に削除または書き換えてください。
+- 開催後は `status: 終了` にして、本文（`---` の下）に報告を書きます。書き方は `01-good-rehabilitation.md` を参考に。
+- 終了した会は自動で「開催報告」に並びます。
 
 ### フォーム・SNS・代表者情報
 `src/site.config.ts` を書き換えます（問い合わせフォームURL、メール、Instagram / X / LINE）。

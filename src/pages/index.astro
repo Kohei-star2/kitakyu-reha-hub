@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import EventCard from '../components/EventCard.astro';
 import CircleIllustration from '../components/CircleIllustration.astro';
 import Face from '../components/Face.astro';
-import { getUpcoming, getPast, formatDate, bigDate } from '../lib/events';
+import { getUpcoming, getPast, formatDate, bigDate, questionLabel } from '../lib/events';
 
 const upcoming = await getUpcoming();
 const next = upcoming[0];
@@ -87,8 +87,8 @@ const reports = (await getPast()).slice(0, 4);
           {reports.map((r) => (
             <li>
               <a href={`/reports/${r.id}`}>
-                <span class="d">{formatDate(r.data.date)}</span>
-                <span class="q">{r.data.question}</span>
+                <span class="d">{r.data.title}{r.data.date && ` ${formatDate(r.data.date)}`}</span>
+                <span class="q">{questionLabel(r)}</span>
                 <span class="go" aria-hidden="true">→</span>
               </a>
             </li>

@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getPast, formatDate } from '../../lib/events';
+import { getPast, formatDate, questionLabel } from '../../lib/events';
 const past = await getPast();
 const tags = [...new Set(past.flatMap((e) => e.data.tags))];
 ---
@@ -20,8 +20,8 @@ const tags = [...new Set(past.flatMap((e) => e.data.tags))];
           {past.map((r) => (
             <li class="report-item" data-tags={r.data.tags.join(',')}>
               <a href={`/reports/${r.id}`}>
-                <span class="d">{formatDate(r.data.date)}{r.data.sample && ' サンプル'}</span>
-                <span class="q">{r.data.question}</span>
+                <span class="d">{r.data.title}{r.data.date && ` ${formatDate(r.data.date)}`}</span>
+                <span class="q">{questionLabel(r)}</span>
                 <span class="go" aria-hidden="true">→</span>
               </a>
             </li>
