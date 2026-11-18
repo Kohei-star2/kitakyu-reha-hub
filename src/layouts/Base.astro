@@ -4,7 +4,7 @@ import { SITE } from '../site.config';
 
 interface Props { title?: string; description?: string; }
 const { title, description = SITE.description } = Astro.props;
-const pageTitle = title ? `${title} | ${SITE.name}` : SITE.name;
+const pageTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} | ${SITE.tagline}`;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const nav = [
   { href: '/about', label: '私たちについて' },
@@ -37,7 +37,7 @@ const year = new Date().getFullYear();
       <div class="container header-inner">
         <a href="/" class="logo">
           <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="#d6eef8"/><circle cx="32" cy="32" r="10" fill="#fff" stroke="#2b3a40" stroke-width="3"/><circle cx="32" cy="10" r="7" fill="#3ba9d9"/><circle cx="51" cy="42" r="7" fill="#5cc6a7"/><circle cx="13" cy="42" r="7" fill="#ffd27a"/></svg>
-          <span>北九州リハビリテーションハブ</span>
+          <span class="logo-text"><span class="logo-name">{SITE.name}</span><span class="logo-tag">{SITE.tagline}</span></span>
         </a>
         <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav">メニュー</button>
         <nav id="site-nav" class="nav" aria-label="メインメニュー">
@@ -63,7 +63,8 @@ const year = new Date().getFullYear();
 
     <footer class="site-footer">
       <div class="container">
-        <p class="footer-name">北九州リハビリテーションハブ</p>
+        <p class="footer-name">{SITE.name}</p>
+        <p class="footer-tag">{SITE.tagline}</p>
         <ul class="footer-nav">
           {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
           <li><a href="/privacy">プライバシーポリシー</a></li>

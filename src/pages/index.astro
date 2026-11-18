@@ -4,6 +4,8 @@ import EventCard from '../components/EventCard.astro';
 import CircleIllustration from '../components/CircleIllustration.astro';
 import Face from '../components/Face.astro';
 import { getUpcoming, getPast, formatDate, bigDate, questionLabel } from '../lib/events';
+import { SITE } from '../site.config';
+import Photo from '../components/Photo.astro';
 
 const upcoming = await getUpcoming();
 const next = upcoming[0];
@@ -14,6 +16,7 @@ const reports = (await getPast()).slice(0, 4);
   <section class="hero">
     <div class="container hero-grid">
       <div>
+        <p class="hero-tag">{SITE.tagline}</p>
         <h1><span>問いを囲めば</span><span><em>顔が見えてくる</em></span></h1>
         <p class="hero-lead">
           北九州市の医療職が職種を越えて集まり、ひとつの言葉の意味を一緒に考える哲学対話の会を開いています。一般の方も参加できます。
@@ -24,6 +27,15 @@ const reports = (await getPast()).slice(0, 4);
         </div>
       </div>
       <CircleIllustration />
+    </div>
+  </section>
+
+  <section class="pt0">
+    <div class="container">
+      <figure class="scene">
+        <Photo />
+        <figcaption>職種も経験もちがう人たちが、ひとつの問いを囲みます</figcaption>
+      </figure>
     </div>
   </section>
 

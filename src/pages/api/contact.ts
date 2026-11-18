@@ -173,7 +173,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
     message,
     '',
     '---',
-    '北九州リハビリテーションハブ ウェブサイトのフォームから送信されました',
+    '北九州リハビリテーションハブ研究会 ウェブサイトのフォームから送信されました',
   ]
     .filter((l) => l !== '')
     .join('\n');
@@ -183,7 +183,7 @@ export const POST: APIRoute = async ({ request, clientAddress, url }) => {
       method: 'POST',
       headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        from: process.env.CONTACT_FROM || '北九州リハビリテーションハブ <onboarding@resend.dev>',
+        from: process.env.CONTACT_FROM || '北九州リハビリテーションハブ研究会 <onboarding@resend.dev>',
         to: [to],
         reply_to: email,
         subject: `【${kind}】${name} さんから`,
