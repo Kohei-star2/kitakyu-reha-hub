@@ -8,7 +8,7 @@ const events = defineCollection({
     title: z.string(),            // 例: 第1回 本質観取の会
     question: z.string(),         // 問い（テーマ）例: 「連携」とは何か
     date: z.string(),             // 開催日 YYYY-MM-DD
-    time: z.string(),             // 例: 14:00〜16:30
+    time: z.string(),             // 例: 14:00-16:30
     format: z.enum(['対面', 'オンライン', '対面＋オンライン']),
     place: z.string(),            // 会場名やZoomなど
     capacity: z.number().optional(),

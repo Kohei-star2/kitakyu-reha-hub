@@ -11,20 +11,20 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 const e = entry.data;
 ---
-<Base title={`${e.question}｜開催報告`}>
-  <div class="page-head">
-    <div class="narrow">
-      <span class="eyebrow">REPORT</span>
-      <p style="margin:0 0 4px;">{formatDate(e.date)}　{e.format}</p>
-      <h1>{e.question}</h1>
-      <p>{e.title}</p>
-    </div>
-  </div>
+<Base title={`${e.question} 開催報告`}>
+  <div class="page-head"><div class="container"><h1>{e.question}</h1></div></div>
   <section>
     <article class="narrow prose">
-      {e.sample && <p class="notice">この記事はサンプルです。公開前に実際の報告へ書き換えてください。</p>}
+      <table class="info-table" style="margin-bottom:48px;">
+        <tbody>
+          <tr><th>回</th><td>{e.title}</td></tr>
+          <tr><th>日時</th><td>{formatDate(e.date)} {e.time}</td></tr>
+          <tr><th>形式</th><td>{e.format}</td></tr>
+        </tbody>
+      </table>
+      {e.sample && <p class="notice">この記事はサンプルです。公開前に実際の報告へ書き換えてください</p>}
       <Content />
-      <p class="more"><a href="/reports">← 開催報告の一覧へ</a></p>
+      <div class="actions"><a href="/reports" class="btn btn-ghost">報告の一覧へ</a></div>
     </article>
   </section>
 </Base>

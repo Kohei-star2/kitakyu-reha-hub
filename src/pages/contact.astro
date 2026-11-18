@@ -2,34 +2,32 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site.config';
 const sns = Object.entries(SITE.sns).filter(([, url]) => url);
-const labels: Record<string, string> = { instagram: 'Instagram', x: 'X（旧Twitter）', line: 'LINE公式アカウント' };
+const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: 'LINE公式アカウント' };
 ---
-<Base title="お問い合わせ" description="北九州リハビリテーションハブへのお問い合わせ、取材・協働のご相談はこちらから。">
-  <div class="page-head">
-    <div class="container">
-      <span class="eyebrow">CONTACT</span>
-      <h1>お問い合わせ</h1>
-      <p>会についてのご質問、取材や協働のご相談はこちらから。</p>
-    </div>
-  </div>
+<Base title="お問い合わせ" description="北九州リハビリテーションハブへのお問い合わせ、取材や協働のご相談はこちらから。">
+  <div class="page-head"><div class="container"><h1>お問い合わせ</h1></div></div>
 
   <section>
     <div class="narrow">
-      <div class="card">
-        <h2 style="font-size:1.3rem;">お問い合わせフォーム</h2>
-        <p>お名前、メールアドレス、お問い合わせの種類（参加について／取材／協働のご相談／その他）、内容をお送りください。数日以内にご返信します。</p>
-        {SITE.contactFormUrl
-          ? <a class="btn" href={SITE.contactFormUrl} target="_blank" rel="noopener">フォームを開く</a>
-          : <span class="btn" aria-disabled="true">フォーム準備中</span>}
-        {SITE.contactEmail && <p style="margin-top:16px;">メール：<a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a></p>}
-        <p style="margin:16px 0 0;font-size:0.85rem;color:var(--ink-soft);">お預かりした個人情報は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います。</p>
+      <div class="block">
+        <p class="lead">
+          会についての質問、取材、一緒に何かやりたいという相談まで、気軽にどうぞ。
+          お名前、メールアドレス、お問い合わせの種類と内容を送ってください。数日以内にお返事します。
+        </p>
+        <div class="actions">
+          {SITE.contactFormUrl
+            ? <a class="btn" href={SITE.contactFormUrl} target="_blank" rel="noopener">フォームを開く</a>
+            : <span class="btn" aria-disabled="true">フォーム準備中</span>}
+        </div>
+        {SITE.contactEmail && <p class="lead" style="margin-top:24px;">メール <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a></p>}
+        <p style="margin-top:24px;">お預かりした個人情報は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います</p>
       </div>
 
       {sns.length > 0 && (
-        <div style="margin-top:32px;">
-          <h2 style="font-size:1.3rem;">SNS</h2>
-          <div class="hero-actions">
-            {sns.map(([key, url]) => <a class="btn btn-outline" href={url} target="_blank" rel="noopener">{labels[key]}</a>)}
+        <div class="block">
+          <h2>SNS</h2>
+          <div class="actions">
+            {sns.map(([key, url]) => <a class="btn btn-ghost" href={url} target="_blank" rel="noopener">{labels[key]}</a>)}
           </div>
         </div>
       )}

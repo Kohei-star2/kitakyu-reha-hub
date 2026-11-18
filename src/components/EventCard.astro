@@ -2,29 +2,30 @@
 import type { EventEntry } from '../lib/events';
 import { formatDate } from '../lib/events';
 
-interface Props { event: EventEntry; showApply?: boolean; }
-const { event, showApply = true } = Astro.props;
+interface Props { event: EventEntry; }
+const { event } = Astro.props;
 const e = event.data;
-const badgeClass = e.status === '募集中' ? 'badge-open' : e.status === '満席' ? 'badge-full' : 'badge-closed';
+const cls = e.status === '募集中' ? 'tag-open' : e.status === '満席' ? 'tag-full' : 'tag-closed';
 ---
-<article class={`card event-card ${e.status === '終了' ? 'is-closed' : ''}`}>
-  <div class="badges">
-    <span class={`badge ${badgeClass}`}>{e.status}</span>
-    <span class="badge">{e.format}</span>
-    {e.sample && <span class="badge badge-sample">サンプル</span>}
+<article class="event-card">
+  <div class="tags">
+    <span class={`tag ${cls}`}>{e.status}</span>
+    <span class="tag">{e.format}</span>
+    {e.sample && <span class="tag tag-sample">サンプル</span>}
   </div>
-  <p style="margin:0;color:var(--ink-soft);font-size:0.9rem;">{e.title}</p>
   <p class="event-question">{e.question}</p>
   <dl class="event-meta">
+    <dt>回</dt><dd>{e.title}</dd>
     <dt>日時</dt><dd>{formatDate(e.date)} {e.time}</dd>
     <dt>場所</dt><dd>{e.place}</dd>
     {e.capacity && (<><dt>定員</dt><dd>{e.capacity}名</dd></>)}
     {e.fee && (<><dt>参加費</dt><dd>{e.fee}</dd></>)}
   </dl>
-  {showApply && e.status !== '終了' && (
-    e.status === '募集中' && e.applyUrl
-      ? <a class="btn" href={e.applyUrl} target="_blank" rel="noopener">この会に申し込む</a>
-      : <span class="btn" aria-disabled="true">{e.status === '満席' ? '満席です' : '申込準備中'}</span>
-  )}
-  {e.status === '終了' && <a class="btn btn-outline btn-small" href={`/reports/${event.id}`}>開催報告を読む</a>}
+  <div class="actions">
+    {e.status === '終了'
+      ? <a class="btn btn-ghost" href={`/reports/${event.id}`}>報告を読む</a>
+      : e.status === '募集中' && e.applyUrl
+        ? <a class="btn" href={e.applyUrl} target="_blank" rel="noopener">この会に申し込む</a>
+        : <span class="btn" aria-disabled="true">{e.status === '満席' ? '満席です' : '申込受付前'}</span>}
+  </div>
 </article>

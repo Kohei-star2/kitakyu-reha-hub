@@ -5,38 +5,30 @@ const past = await getPast();
 const tags = [...new Set(past.flatMap((e) => e.data.tags))];
 ---
 <Base title="開催報告" description="これまでの本質観取の会の問いと、対話から言葉になった本質の記録です。">
-  <div class="page-head">
-    <div class="container">
-      <span class="eyebrow">REPORT</span>
-      <h1>開催報告</h1>
-      <p>これまでの問いと、対話から言葉になった本質の記録です。</p>
-    </div>
-  </div>
+  <div class="page-head"><div class="container"><h1>開催報告</h1></div></div>
 
   <section>
     <div class="container">
       {tags.length > 0 && (
-        <div class="badges" style="margin-bottom:24px;" id="tag-filter">
-          <button class="badge badge-open" data-tag="" style="border:0;cursor:pointer;">すべて</button>
-          {tags.map((t) => <button class="badge" data-tag={t} style="border:0;cursor:pointer;">{t}</button>)}
+        <div class="filter" id="tag-filter">
+          <button class="is-on" data-tag="">すべて</button>
+          {tags.map((t) => <button data-tag={t}>{t}</button>)}
         </div>
       )}
       {past.length > 0 ? (
-        <div class="grid-3">
+        <ul class="report-list">
           {past.map((r) => (
-            <a href={`/reports/${r.id}`} class="card report-item" data-tags={r.data.tags.join(',')} style="text-decoration:none;color:inherit;">
-              <div class="badges" style="margin-bottom:8px;">
-                {r.data.sample && <span class="badge badge-sample">サンプル</span>}
-                {r.data.tags.map((t) => <span class="badge">{t}</span>)}
-              </div>
-              <p style="margin:0 0 6px;font-size:0.85rem;color:var(--ink-soft);">{formatDate(r.data.date)}</p>
-              <p class="event-question" style="font-size:1.1rem;">{r.data.question}</p>
-              <p style="margin:8px 0 0;font-size:0.9rem;">{r.data.title}</p>
-            </a>
+            <li class="report-item" data-tags={r.data.tags.join(',')}>
+              <a href={`/reports/${r.id}`}>
+                <span class="d">{formatDate(r.data.date)}{r.data.sample && ' サンプル'}</span>
+                <span class="q">{r.data.question}</span>
+                <span class="go" aria-hidden="true">→</span>
+              </a>
+            </li>
           ))}
-        </div>
+        </ul>
       ) : (
-        <div class="card"><p style="margin:0;">開催報告は準備中です。</p></div>
+        <p class="lead">開催報告は準備中です</p>
       )}
     </div>
   </section>
@@ -46,7 +38,7 @@ const tags = [...new Set(past.flatMap((e) => e.data.tags))];
     const items = document.querySelectorAll<HTMLElement>('.report-item');
     buttons.forEach((b) => b.addEventListener('click', () => {
       const tag = b.dataset.tag;
-      buttons.forEach((x) => x.classList.toggle('badge-open', x === b));
+      buttons.forEach((x) => x.classList.toggle('is-on', x === b));
       items.forEach((it) => {
         const show = !tag || (it.dataset.tags || '').split(',').includes(tag);
         it.style.display = show ? '' : 'none';
