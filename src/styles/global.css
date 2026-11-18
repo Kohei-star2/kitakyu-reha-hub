@@ -185,6 +185,7 @@ section.pt0 { padding-top: 0; }
 .prose blockquote { margin: 1.4em 0; padding: 26px 32px; background: var(--sky-soft); border-radius: var(--r); font-weight: 700; font-size: 1.15rem; }
 .prose blockquote p { margin: 0; }
 .prose ul { padding-left: 1.3em; }
+.soft-note { margin-top: 40px; background: var(--mint-soft); border-radius: var(--r); padding: 20px 26px; }
 .notice { background: #fff4c4; border-radius: 20px; padding: 14px 22px; font-weight: 500; }
 
 /* cta */
