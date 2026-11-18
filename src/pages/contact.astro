@@ -1,32 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, safeUrl, safeEmail } from '../site.config';
+import { SITE, safeUrl } from '../site.config';
 const sns = Object.entries(SITE.sns).map(([k, url]) => [k, safeUrl(url)] as const).filter(([, url]) => url);
-const formUrl = safeUrl(SITE.contactFormUrl);
-const email = safeEmail(SITE.contactEmail);
 const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: 'LINE公式アカウント' };
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
+const kinds = ['参加申込', '会について質問', '取材', '一緒に活動したい', 'その他'];
 ---
-<Base title="お問い合わせ" description="北九州リハビリテーションハブへのお問い合わせ、取材や協働のご相談はこちらから。">
+<Base title="お問い合わせ・参加申込" description="北九州リハビリテーションハブへのお問い合わせ、本質観取の会への参加申込はこちらから。">
   <div class="page-head"><div class="container"><h1>お問い合わせ</h1></div></div>
 
   <section>
     <div class="narrow">
-      <div class="block">
-        <p class="lead">
-          会についての質問、取材、一緒に何かやりたいという相談まで、気軽にどうぞ。
-          お名前、メールアドレス、お問い合わせの種類と内容を送ってください。数日以内にお返事します。
-        </p>
-        <div class="actions">
-          {formUrl
-            ? <a class="btn" href={formUrl} target="_blank" rel="noopener noreferrer">フォームを開く</a>
-            : <span class="btn" aria-disabled="true">フォーム準備中</span>}
+      <p class="lead">
+        本質観取の会への参加申込、会についての質問、取材、一緒に何かやりたいという相談まで、こちらのフォームからどうぞ。数日以内にお返事します。
+      </p>
+
+      <form id="form" class="contact-form" action="/api/contact" method="post" novalidate>
+        <div class="field">
+          <label for="kind">お問い合わせの種類</label>
+          <select id="kind" name="kind" required>
+            {kinds.map((k) => <option value={k}>{k}</option>)}
+          </select>
         </div>
-        {email && <p class="lead mt24">メール <a href={`mailto:${email}`}>{email}</a></p>}
-        <p class="mt24">お預かりした個人情報は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います</p>
-      </div>
+        <div class="field">
+          <label for="name">お名前</label>
+          <input id="name" name="name" type="text" maxlength="50" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス</label>
+          <input id="email" name="email" type="email" maxlength="254" autocomplete="email" inputmode="email" required />
+        </div>
+        <div class="field">
+          <label for="job">職種（任意）</label>
+          <input id="job" name="job" type="text" maxlength="50" placeholder="理学療法士、看護師、学生など" />
+        </div>
+        <div class="field" data-for="参加申込">
+          <label for="event">参加希望の回（任意）</label>
+          <input id="event" name="event" type="text" maxlength="50" placeholder="第3回 本質観取の会" />
+        </div>
+        <div class="field">
+          <label for="message">内容</label>
+          <textarea id="message" name="message" rows="6" maxlength="2000" required></textarea>
+          <p class="counter"><span id="count">0</span> / 2000</p>
+        </div>
+        <div class="hp" aria-hidden="true">
+          <label for="website">この欄は空のままにしてください</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        {siteKey && <div class="cf-turnstile" data-sitekey={siteKey} data-language="ja"></div>}
+        <p class="mt24">送信内容は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います。</p>
+        <div class="actions">
+          <button class="btn" type="submit" id="submit">送信する</button>
+        </div>
+        <p class="form-status" id="status" role="status" aria-live="polite"></p>
+      </form>
 
       {sns.length > 0 && (
-        <div class="block">
+        <div class="block mt24">
           <h2>SNS</h2>
           <div class="actions">
             {sns.map(([key, url]) => <a class="btn btn-ghost" href={url} target="_blank" rel="noopener noreferrer">{labels[key]}</a>)}
@@ -35,4 +65,7 @@ const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: '
       )}
     </div>
   </section>
+
+  {siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
+  <script is:inline src="/js/contact.js" defer></script>
 </Base>

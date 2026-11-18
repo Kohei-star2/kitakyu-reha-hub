@@ -34,8 +34,8 @@ tags: [連携]
 - 開催後は `status: 終了` にして、本文（`---` の下）に報告を書きます。書き方は `01-good-rehabilitation.md` を参考に。
 - 終了した会は自動で「開催報告」に並びます。
 
-### フォーム・SNS・代表者情報
-`src/site.config.ts` を書き換えます（問い合わせフォームURL、メール、Instagram / X / LINE）。
+### SNS・代表者情報
+`src/site.config.ts` を書き換えます（Instagram / X / LINE、代表者名など）。
 
 ### 配色
 `src/styles/global.css` の先頭（`:root`）で色を管理しています。メインは空色 `#3ba9d9`、サブはミント `#5cc6a7` です。
@@ -57,3 +57,28 @@ tags: [連携]
 - 申込URL・フォームURL・SNSのURLは `https://` で始まるものしか表示されません。
 - Dependabot が週1回、依存パッケージの更新を確認してプルリクエストを作ります。
 - GitHub Actions がプッシュのたびにビルドと `npm audit`（重大な脆弱性）を確認します。
+
+## お問い合わせ・参加申込フォーム
+
+`/contact` のフォームは `/api/contact`（Vercel のサーバー関数）に送られ、メールで届きます。
+動かすには Vercel の **Settings → Environment Variables** に次の4つを登録し、再デプロイします。
+
+| 名前 | 中身 | 取得先 |
+| --- | --- | --- |
+| `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile のサイトキー（公開してよい） | Cloudflare → Turnstile |
+| `TURNSTILE_SECRET_KEY` | Turnstile のシークレットキー | Cloudflare → Turnstile |
+| `RESEND_API_KEY` | メール送信用の API キー | resend.com |
+| `CONTACT_TO` | 受け取るメールアドレス | Resend に登録したアドレス |
+
+独自ドメインがない間は、送信元が `onboarding@resend.dev` になり、届け先は Resend に登録したメールアドレスだけです。
+
+### 攻撃・大量送信への対策
+- 静的ページは Vercel の CDN から配信され、Vercel の DDoS 対策が自動でかかります。
+- フォームの受け口では次を行っています。
+  - POST・JSON・10KB 以下以外は拒否
+  - 自サイト以外からの送信を拒否
+  - 同じ IP から10分に8回までに制限
+  - ボット対策（見えない入力欄、入力時間のチェック）
+  - Cloudflare Turnstile による人間確認
+  - 入力値の厳しい検証
+- 攻撃を受けているときは、Vercel の **Firewall → Attack Challenge Mode** をオンにすると、全訪問者に確認をかけて一時的に守れます。
