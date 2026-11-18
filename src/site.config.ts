@@ -16,3 +16,18 @@ export const SITE = {
     line: '',
   },
 };
+
+/** https:// で始まる正しい URL だけを通す（javascript: などを防ぐ） */
+export function safeUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    return u.protocol === 'https:' ? u.href : null;
+  } catch {
+    return null;
+  }
+}
+
+/** メールアドレスとして妥当なものだけを通す */
+export function safeEmail(email: string): string | null {
+  return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(email) ? email : null;
+}

@@ -1,7 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../site.config';
-const sns = Object.entries(SITE.sns).filter(([, url]) => url);
+import { SITE, safeUrl, safeEmail } from '../site.config';
+const sns = Object.entries(SITE.sns).map(([k, url]) => [k, safeUrl(url)] as const).filter(([, url]) => url);
+const formUrl = safeUrl(SITE.contactFormUrl);
+const email = safeEmail(SITE.contactEmail);
 const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: 'LINE公式アカウント' };
 ---
 <Base title="お問い合わせ" description="北九州リハビリテーションハブへのお問い合わせ、取材や協働のご相談はこちらから。">
@@ -15,19 +17,19 @@ const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: '
           お名前、メールアドレス、お問い合わせの種類と内容を送ってください。数日以内にお返事します。
         </p>
         <div class="actions">
-          {SITE.contactFormUrl
-            ? <a class="btn" href={SITE.contactFormUrl} target="_blank" rel="noopener">フォームを開く</a>
+          {formUrl
+            ? <a class="btn" href={formUrl} target="_blank" rel="noopener noreferrer">フォームを開く</a>
             : <span class="btn" aria-disabled="true">フォーム準備中</span>}
         </div>
-        {SITE.contactEmail && <p class="lead" style="margin-top:24px;">メール <a href={`mailto:${SITE.contactEmail}`}>{SITE.contactEmail}</a></p>}
-        <p style="margin-top:24px;">お預かりした個人情報は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います</p>
+        {email && <p class="lead mt24">メール <a href={`mailto:${email}`}>{email}</a></p>}
+        <p class="mt24">お預かりした個人情報は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います</p>
       </div>
 
       {sns.length > 0 && (
         <div class="block">
           <h2>SNS</h2>
           <div class="actions">
-            {sns.map(([key, url]) => <a class="btn btn-ghost" href={url} target="_blank" rel="noopener">{labels[key]}</a>)}
+            {sns.map(([key, url]) => <a class="btn btn-ghost" href={url} target="_blank" rel="noopener noreferrer">{labels[key]}</a>)}
           </div>
         </div>
       )}

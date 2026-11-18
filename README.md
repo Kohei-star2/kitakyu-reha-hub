@@ -48,3 +48,12 @@ tags: [連携]
 4. Project 名を `kitakyu-reha-hub` にすると `kitakyu-reha-hub.vercel.app` になる（空いていれば）
 
 ※ Vercel の無料（Hobby）プランは個人・非商用向けです。団体サイトで使えるか、公開前に利用規約を確認してください。
+
+## セキュリティ
+
+- `vercel.json` でセキュリティヘッダーを付けています（CSP、HSTS、クリックジャッキング対策など）。
+  - CSP により、このサイト以外のスクリプトは動きません。外部の埋め込み（Googleマップ、YouTube、アクセス解析など）を足すときは、CSP にそのドメインを追加する必要があります。
+  - HTML の中に `<script>` や `style="..."` を直接書くと CSP でブロックされます。スクリプトは `public/js/`、見た目は `src/styles/global.css` に書いてください。
+- 申込URL・フォームURL・SNSのURLは `https://` で始まるものしか表示されません。
+- Dependabot が週1回、依存パッケージの更新を確認してプルリクエストを作ります。
+- GitHub Actions がプッシュのたびにビルドと `npm audit`（重大な脆弱性）を確認します。

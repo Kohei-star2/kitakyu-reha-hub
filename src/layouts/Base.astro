@@ -72,14 +72,6 @@ const year = new Date().getFullYear();
       </div>
     </footer>
 
-    <script>
-      const btn = document.querySelector('.menu-toggle');
-      const nav = document.getElementById('site-nav');
-      btn?.addEventListener('click', () => {
-        const open = nav?.classList.toggle('is-open');
-        btn.setAttribute('aria-expanded', String(!!open));
-        btn.textContent = open ? '閉じる' : 'メニュー';
-      });
-    </script>
+    <script is:inline src="/js/menu.js" defer></script>
   </body>
 </html>

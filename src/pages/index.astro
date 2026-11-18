@@ -27,7 +27,7 @@ const reports = (await getPast()).slice(0, 4);
     </div>
   </section>
 
-  <section style="padding-top:0;">
+  <section class="pt0">
     <div class="container">
       <h2 class="section-title">次の対話</h2>
       {next && nextDate ? (
@@ -36,7 +36,7 @@ const reports = (await getPast()).slice(0, 4);
           <EventCard event={next} />
         </div>
       ) : (
-        <p class="lead" style="text-align:center;">次回の日程は決まり次第お知らせします。</p>
+        <p class="lead tc">次回の日程は決まり次第お知らせします。</p>
       )}
       {upcoming.length > 1 && <div class="actions center-actions"><a href="/events" class="btn btn-ghost">ほかの日程も見る</a></div>}
     </div>
@@ -80,7 +80,7 @@ const reports = (await getPast()).slice(0, 4);
   </section>
 
   {reports.length > 0 && (
-    <section style="padding-top:0;">
+    <section class="pt0">
       <div class="container">
         <h2 class="section-title">これまでの対話</h2>
         <ul class="report-list">
@@ -98,7 +98,7 @@ const reports = (await getPast()).slice(0, 4);
     </section>
   )}
 
-  <section style="padding-top:0;">
+  <section class="pt0">
     <div class="container doors">
       <a href="/faq">
         <h3>はじめての方へ</h3>

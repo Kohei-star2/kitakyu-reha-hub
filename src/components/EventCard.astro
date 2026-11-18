@@ -24,7 +24,7 @@ const cls = e.status === '募集中' ? 'tag-open' : e.status === '満席' ? 'tag
     {e.status === '終了'
       ? <a class="btn btn-ghost" href={`/reports/${event.id}`}>報告を読む</a>
       : e.status === '募集中' && e.applyUrl
-        ? <a class="btn" href={e.applyUrl} target="_blank" rel="noopener">この会に申し込む</a>
+        ? <a class="btn" href={e.applyUrl} target="_blank" rel="noopener noreferrer">この会に申し込む</a>
         : <span class="btn" aria-disabled="true">{e.status === '満席' ? '満席です' : '申込受付前'}</span>}
   </div>
 </article>

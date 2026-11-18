@@ -1,6 +1,7 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
 
+
 // 開催情報と開催報告は、src/content/events/ に1回1ファイルのMarkdownで追加する
 const events = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/events' }),
@@ -14,7 +15,7 @@ const events = defineCollection({
     place: z.string().optional(),
     capacity: z.number().optional(),
     fee: z.string().optional(),
-    applyUrl: z.string().optional(),
+    applyUrl: z.string().regex(/^https:\/\/[^\s"'<>]+$/, '申込URLは https:// で始まる必要があります').optional(),
     status: z.enum(['準備中', '募集中', '満席', '終了']),
     tags: z.array(z.string()).default([]),
   }),
