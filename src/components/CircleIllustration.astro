@@ -1,0 +1,18 @@
+---
+import Face from './Face.astro';
+// 真ん中の問いを、職種のちがう人たちが輪になって囲む絵
+---
+<svg class="circle-ill" viewBox="0 0 520 470" role="img" aria-label="真ん中の問いを、いろいろな人が輪になって囲んでいる絵">
+  <path d="M120 70 C200 10 330 20 380 90 C430 160 380 260 290 270 C190 282 70 250 60 170 C55 125 80 95 120 70 Z" fill="#d6eef8" />
+  <path d="M250 250 C320 200 450 210 480 300 C505 380 430 450 330 445 C240 440 190 380 205 320 C212 290 228 266 250 250 Z" fill="#d8f3e8" />
+  <circle cx="260" cy="240" r="150" fill="none" stroke="#2b3a40" stroke-width="2.5" stroke-dasharray="3 12" stroke-linecap="round" opacity="0.45" />
+  <g class="center-q">
+    <circle cx="260" cy="240" r="62" fill="#fff" stroke="#2b3a40" stroke-width="3" />
+    <text x="260" y="266" text-anchor="middle" font-family="Zen Maru Gothic, sans-serif" font-weight="900" font-size="72" fill="#3ba9d9">?</text>
+  </g>
+  <Face cls="person p1" x={260} y={84} color="#3ba9d9" hair="short" />
+  <Face cls="person p2" x={404} y={190} color="#5cc6a7" hair="long" />
+  <Face cls="person p3" x={350} y={362} color="#ffd27a" hair="bun" />
+  <Face cls="person p4" x={170} y={362} color="#f4a9a0" hair="short" />
+  <Face cls="person p5" x={116} y={190} color="#9fb8f0" hair="long" />
+</svg>

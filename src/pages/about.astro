@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../site.config';
+import Face from '../components/Face.astro';
 ---
 <Base title="私たちについて">
   <div class="page-head"><div class="container"><h1>私たちについて</h1></div></div>
@@ -8,7 +9,7 @@ import { SITE } from '../site.config';
   <section>
     <div class="narrow">
       <div class="block">
-        <h2>北九州の医療職が<br />顔の見える<br />ほんとうの連携をできるように</h2>
+        <h2>北九州の医療職が<br />顔の見えるほんとうの連携を<br />できるように</h2>
         <p class="lead">
           地域で患者さんを支えるには、病院、施設、在宅のたくさんの職種がつながる必要があります。
           でも実際の連携は、書類と電話のやりとりだけで終わってしまうことも少なくありません。
@@ -50,8 +51,9 @@ import { SITE } from '../site.config';
       <div class="block">
         <h2>代表</h2>
         <div class="people">
-          {SITE.representatives.map((name) => (
+          {SITE.representatives.map((name, i) => (
             <div class="person">
+              <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill={i === 0 ? '#d6eef8' : '#d8f3e8'} /><Face color={i === 0 ? '#3ba9d9' : '#5cc6a7'} hair="short" /></svg>
               <h3>{name}</h3>
               <p>共同代表</p>
               <p>プロフィールは準備中です</p>

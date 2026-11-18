@@ -1,94 +1,88 @@
 ---
 import Base from '../layouts/Base.astro';
 import EventCard from '../components/EventCard.astro';
+import CircleIllustration from '../components/CircleIllustration.astro';
+import Face from '../components/Face.astro';
 import { getUpcoming, getPast, formatDate, bigDate } from '../lib/events';
 
 const upcoming = await getUpcoming();
 const next = upcoming[0];
 const nextDate = next ? bigDate(next.data.date) : null;
 const reports = (await getPast()).slice(0, 4);
-const questions = ['連携とは何か', '回復とは何か', '寄り添うとは何か', '顔の見える関係とは何か', '専門性とは何か', 'チームとは何か'];
 ---
 <Base>
   <section class="hero">
     <div class="container hero-grid">
       <div>
-        <h1><span>ちがう職種で</span><span><span class="accent">同じ問い</span>を</span></h1>
+        <h1><span>問いを囲めば</span><span><em>顔が見えてくる</em></span></h1>
         <p class="hero-lead">
-          北九州リハビリテーションハブは、北九州市の医療職が顔の見える関係でつながるための任意団体です。
-          哲学対話「本質観取の会」を開いています。
+          北九州市の医療職が職種を越えて集まり、ひとつの言葉の意味を一緒に考える哲学対話の会を開いています。一般の方も参加できます。
         </p>
         <div class="actions">
-          <a href="/events" class="btn">次回の会に申し込む</a>
-          <a href="/honshitsu" class="btn btn-ghost">本質観取って何</a>
+          <a href="/events" class="btn">次回の会を見る</a>
+          <a href="/honshitsu" class="btn btn-ghost">本質観取の会とは</a>
         </div>
       </div>
-      <div class="venn" aria-hidden="true">
-        <span class="c1"></span><span class="c2"></span>
-        <b class="label l1">職種A</b><b class="label l2">職種B</b><b class="label l3">同じ<br />問い</b>
-      </div>
+      <CircleIllustration />
     </div>
   </section>
 
-  <div class="marquee" aria-hidden="true">
-    <div class="marquee-track">
-      {[...questions, ...questions].map((q) => <span>{q}</span>)}
-    </div>
-  </div>
-
-  <section>
+  <section style="padding-top:0;">
     <div class="container">
       <h2 class="section-title">次の対話</h2>
       {next && nextDate ? (
         <div class="next">
-          <div class="bigdate"><span class="md">{nextDate.md}</span><span class="wd">{nextDate.wd}</span></div>
+          <div class="date-badge"><span class="md">{nextDate.md}</span><span class="wd">{nextDate.wd}</span></div>
           <EventCard event={next} />
         </div>
       ) : (
-        <p class="lead">次回の日程は決まり次第ここでお知らせします</p>
+        <p class="lead" style="text-align:center;">次回の日程は決まり次第お知らせします。</p>
       )}
-      {upcoming.length > 1 && <div class="actions"><a href="/events" class="btn btn-ghost">ほかの日程も見る</a></div>}
+      {upcoming.length > 1 && <div class="actions center-actions"><a href="/events" class="btn btn-ghost">ほかの日程も見る</a></div>}
     </div>
   </section>
 
   <section class="vision">
     <div class="container">
-      <h2>北九州の医療職が<br />顔の見える<br />ほんとうの連携をできるように</h2>
+      <h2>北九州の医療職が<br />顔の見えるほんとうの連携を<br />できるように</h2>
       <div class="pillars">
         <div>
+          <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill="#d6eef8" /><Face color="#3ba9d9" hair="short" /></svg>
           <h3>顔が見える</h3>
-          <p>名前を知っているだけでなく、あの人ならこう考えると想像できる関係を増やします</p>
+          <p>名前を知っているだけでなく、あの人ならこう考えると想像できる関係を地域に増やします。</p>
         </div>
         <div>
+          <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill="#d8f3e8" /><Face x={-24} y={6} color="#5cc6a7" hair="long" /><Face x={26} y={10} color="#ffd27a" hair="bun" /></svg>
           <h3>職種を越える</h3>
-          <p>リハビリ職も看護師も医師も相談員も、同じ問いの前では対等です</p>
+          <p>リハビリ職も看護師も医師も相談員も、同じ問いの前では対等に話します。</p>
         </div>
         <div>
+          <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill="#ffefc9" /><circle cx="0" cy="0" r="22" fill="#fff" stroke="#2b3a40" stroke-width="3" /><text x="0" y="12" text-anchor="middle" font-family="Zen Maru Gothic, sans-serif" font-weight="900" font-size="32" fill="#3ba9d9">?</text><circle cx="0" cy="-42" r="9" fill="#3ba9d9" /><circle cx="38" cy="22" r="9" fill="#5cc6a7" /><circle cx="-38" cy="22" r="9" fill="#f4a9a0" /></svg>
           <h3>本当につながる</h3>
-          <p>書類と電話だけの連携から、考え方まで分かり合える連携へ</p>
+          <p>書類と電話だけの連携から、考え方まで分かり合える連携へ。</p>
         </div>
       </div>
-      <div class="actions"><a href="/about" class="btn btn-light">私たちについて</a></div>
+      <div class="actions center-actions"><a href="/about" class="btn btn-ghost">私たちについて</a></div>
     </div>
   </section>
 
   <section>
     <div class="container">
-      <h2 class="section-title">本質観取の会で<br />やること</h2>
+      <h2 class="section-title">本質観取の会でやること</h2>
       <ol class="steps">
-        <li><h3>問いを置く</h3><p>連携とは何か、のようなふだん使う言葉をひとつ選びます</p></li>
-        <li><h3>体験を話す</h3><p>それぞれの現場で起きた具体的なエピソードを持ち寄ります</p></li>
-        <li><h3>共通点を探す</h3><p>ばらばらの体験に通じているものをみんなで探します</p></li>
-        <li><h3>言葉にする</h3><p>全員が納得できる一文にまとめて、その日の答えにします</p></li>
+        <li><h3>問いを置く</h3><p>ふだん何気なく使っている言葉をひとつ選び、その日の問いにします。</p></li>
+        <li><h3>体験を話す</h3><p>それぞれの現場で起きた具体的なエピソードを持ち寄ります。</p></li>
+        <li><h3>共通点を探す</h3><p>ばらばらの体験に通じているものを、みんなで探します。</p></li>
+        <li><h3>言葉にする</h3><p>全員が納得できる一文にまとめて、その日の答えにします。</p></li>
       </ol>
-      <div class="actions"><a href="/honshitsu" class="btn btn-ghost">くわしく見る</a></div>
+      <div class="actions center-actions"><a href="/honshitsu" class="btn btn-ghost">くわしく見る</a></div>
     </div>
   </section>
 
   {reports.length > 0 && (
     <section style="padding-top:0;">
       <div class="container">
-        <h2 class="section-title">これまでの問い</h2>
+        <h2 class="section-title">これまでの対話</h2>
         <ul class="report-list">
           {reports.map((r) => (
             <li>
@@ -104,14 +98,16 @@ const questions = ['連携とは何か', '回復とは何か', '寄り添うと�
     </section>
   )}
 
-  <div class="doors">
-    <a href="/faq">
-      <h3>はじめての方へ</h3>
-      <p>哲学の知識はいりません。一般の方も参加できます</p>
-    </a>
-    <a href="/contact">
-      <h3>お問い合わせ</h3>
-      <p>参加の相談、取材、一緒に何かやりたい方はこちら</p>
-    </a>
-  </div>
+  <section style="padding-top:0;">
+    <div class="container doors">
+      <a href="/faq">
+        <h3>はじめての方へ</h3>
+        <p>哲学の知識はいりません。一般の方も参加できます。</p>
+      </a>
+      <a href="/contact">
+        <h3>お問い合わせ</h3>
+        <p>参加の相談、取材、一緒に何かやりたい方はこちらへ。</p>
+      </a>
+    </div>
+  </section>
 </Base>

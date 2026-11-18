@@ -1,0 +1,21 @@
+---
+// やわらかい線画の人物（頭と肩）。x, y は肩の中心あたり
+interface Props { x?: number; y?: number; color?: string; hair?: 'short' | 'long' | 'bun' | 'none'; cls?: string; }
+const { x = 0, y = 0, color = '#3ba9d9', hair = 'short', cls = '' } = Astro.props;
+const ink = '#2b3a40';
+---
+<g transform={`translate(${x} ${y})`}>
+  <g class={cls}>
+    <path d="M-46 62 Q-46 24 0 24 Q46 24 46 62 Z" fill={color} stroke={ink} stroke-width="3" stroke-linejoin="round" />
+    {hair === 'long' && <path d="M-33 20 Q-38 -40 0 -40 Q38 -40 33 20 Z" fill={ink} />}
+    <circle cx="0" cy="-6" r="30" fill="#fff" stroke={ink} stroke-width="3" />
+    {hair === 'short' && <path d="M-30 -10 Q-30 -38 0 -38 Q30 -38 30 -10 Q18 -22 0 -24 Q-18 -22 -30 -10 Z" fill={ink} />}
+    {hair === 'long' && <path d="M-30 -8 Q-28 -38 0 -38 Q28 -38 30 -8 Q12 -26 -6 -24 Q-22 -20 -30 -8 Z" fill={ink} />}
+    {hair === 'bun' && (<><circle cx="0" cy="-42" r="11" fill={ink} /><path d="M-30 -10 Q-30 -38 0 -38 Q30 -38 30 -10 Q14 -26 0 -24 Q-14 -26 -30 -10 Z" fill={ink} /></>)}
+    <circle cx="-10" cy="-4" r="3.2" fill={ink} />
+    <circle cx="10" cy="-4" r="3.2" fill={ink} />
+    <path d="M-8 8 Q0 15 8 8" fill="none" stroke={ink} stroke-width="2.6" stroke-linecap="round" />
+    <circle cx="-18" cy="5" r="4.5" fill="#f6c3bb" />
+    <circle cx="18" cy="5" r="4.5" fill="#f6c3bb" />
+  </g>
+</g>
