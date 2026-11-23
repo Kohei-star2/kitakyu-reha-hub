@@ -8,9 +8,8 @@ export const SITE = {
   founded: '2026年',
   representatives: ['水津 文昭', '舩津 康平'],
   area: '北九州市',
-  // 申込・問い合わせフォーム（Googleフォームなど）のURL。未設定なら '' のまま
-  contactFormUrl: '',
-  contactEmail: '',
+  // お問い合わせ・参加申込の Google フォームの URL（フォームの「送信」→リンクでコピーしたもの）
+  googleFormUrl: '',
   sns: {
     instagram: '',
     x: '',
@@ -28,7 +27,15 @@ export function safeUrl(url: string): string | null {
   }
 }
 
-/** メールアドレスとして妥当なものだけを通す */
-export function safeEmail(email: string): string | null {
-  return /^[^\s@<>"']+@[^\s@<>"']+\.[^\s@<>"']+$/.test(email) ? email : null;
+/** Google フォームの URL だけを通し、埋め込み用（embedded=true）にする */
+export function googleFormEmbedUrl(url: string): string | null {
+  const safe = safeUrl(url);
+  if (!safe) return null;
+  const u = new URL(safe);
+  const ok = (u.hostname === 'docs.google.com' && u.pathname.startsWith('/forms/')) || u.hostname === 'forms.gle';
+  if (!ok) return null;
+  if (u.hostname === 'forms.gle') return null; // 短縮URLは埋め込めないので docs.google.com の URL を使う
+  u.pathname = u.pathname.replace(/\/(edit|viewform)?$/, '/viewform');
+  u.searchParams.set('embedded', 'true');
+  return u.href;
 }

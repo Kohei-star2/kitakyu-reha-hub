@@ -52,33 +52,19 @@ tags: [連携]
 ## セキュリティ
 
 - `vercel.json` でセキュリティヘッダーを付けています（CSP、HSTS、クリックジャッキング対策など）。
-  - CSP により、このサイト以外のスクリプトは動きません。外部の埋め込み（Googleマップ、YouTube、アクセス解析など）を足すときは、CSP にそのドメインを追加する必要があります。
+  - CSP により、このサイト以外のスクリプトは動きません。埋め込めるのは Google フォームだけです。Googleマップ、YouTube、アクセス解析などを足すときは、CSP にそのドメインを追加する必要があります。
   - HTML の中に `<script>` や `style="..."` を直接書くと CSP でブロックされます。スクリプトは `public/js/`、見た目は `src/styles/global.css` に書いてください。
-- 申込URL・フォームURL・SNSのURLは `https://` で始まるものしか表示されません。
+- 申込URL・SNSのURLは `https://` で始まるもの、フォームは Google フォームの URL しか表示されません。
 - Dependabot が週1回、依存パッケージの更新を確認してプルリクエストを作ります。
 - GitHub Actions がプッシュのたびにビルドと `npm audit`（重大な脆弱性）を確認します。
 
 ## お問い合わせ・参加申込フォーム
 
-`/contact` のフォームは `/api/contact`（Vercel のサーバー関数）に送られ、メールで届きます。
-動かすには Vercel の **Settings → Environment Variables** に次の4つを登録し、再デプロイします。
+Google フォームを埋め込んでいます。
 
-| 名前 | 中身 | 取得先 |
-| --- | --- | --- |
-| `PUBLIC_TURNSTILE_SITE_KEY` | Turnstile のサイトキー（公開してよい） | Cloudflare → Turnstile |
-| `TURNSTILE_SECRET_KEY` | Turnstile のシークレットキー | Cloudflare → Turnstile |
-| `RESEND_API_KEY` | メール送信用の API キー | resend.com |
-| `CONTACT_TO` | 受け取るメールアドレス | Resend に登録したアドレス |
+1. Google フォームで質問を作る（例：お問い合わせの種類、お名前、メールアドレス、職種、参加希望の回、内容）
+2. 右上の「送信」→ リンクのタブで URL をコピー（「URL を短縮」はオフ）
+3. `src/site.config.ts` の `googleFormUrl` に貼る
 
-独自ドメインがない間は、送信元が `onboarding@resend.dev` になり、届け先は Resend に登録したメールアドレスだけです。
-
-### 攻撃・大量送信への対策
-- 静的ページは Vercel の CDN から配信され、Vercel の DDoS 対策が自動でかかります。
-- フォームの受け口では次を行っています。
-  - POST・JSON・10KB 以下以外は拒否
-  - 自サイト以外からの送信を拒否
-  - 同じ IP から10分に8回までに制限
-  - ボット対策（見えない入力欄、入力時間のチェック）
-  - Cloudflare Turnstile による人間確認
-  - 入力値の厳しい検証
-- 攻撃を受けているときは、Vercel の **Firewall → Attack Challenge Mode** をオンにすると、全訪問者に確認をかけて一時的に守れます。
+回答は Google フォームの「回答」タブ、またはスプレッドシートで確認できます。
+「設定」→「回答」→「メール通知を受け取る」をオンにすると、送信のたびにメールが届きます。

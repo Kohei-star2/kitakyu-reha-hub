@@ -26,7 +26,7 @@ const cls = e.status === '募集中' ? 'tag-open' : e.status === '満席' ? 'tag
       : e.status === '募集中'
         ? e.applyUrl
           ? <a class="btn" href={e.applyUrl} target="_blank" rel="noopener noreferrer">この会に申し込む</a>
-          : <a class="btn" href={`/contact?kind=${encodeURIComponent('参加申込')}&event=${encodeURIComponent(e.title)}#form`}>この会に申し込む</a>
+          : <a class="btn" href="/contact#form">この会に申し込む</a>
         : <span class="btn" aria-disabled="true">{e.status === '満席' ? '満席です' : '申込受付前'}</span>}
   </div>
 </article>

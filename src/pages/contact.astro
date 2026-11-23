@@ -1,10 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE, safeUrl } from '../site.config';
+import { SITE, safeUrl, googleFormEmbedUrl } from '../site.config';
 const sns = Object.entries(SITE.sns).map(([k, url]) => [k, safeUrl(url)] as const).filter(([, url]) => url);
 const labels: Record<string, string> = { instagram: 'Instagram', x: 'X', line: 'LINE公式アカウント' };
-const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY ?? '';
-const kinds = ['参加申込', '会について質問', '取材', '一緒に活動したい', 'その他'];
+const formUrl = googleFormEmbedUrl(SITE.googleFormUrl);
+const openUrl = (() => {
+  if (!formUrl) return null;
+  const u = new URL(formUrl);
+  u.searchParams.delete('embedded');
+  return u.href;
+})();
 ---
 <Base title="お問い合わせ・参加申込" description="北九州リハビリテーションハブ研究会へのお問い合わせ、本質観取の会への参加申込はこちらから。">
   <div class="page-head"><div class="container"><h1>お問い合わせ</h1></div></div>
@@ -15,45 +20,17 @@ const kinds = ['参加申込', '会について質問', '取材', '一緒に活�
         本質観取の会への参加申込、会についての質問、取材、一緒に何かやりたいという相談まで、こちらのフォームからどうぞ。数日以内にお返事します。
       </p>
 
-      <form id="form" class="contact-form" action="/api/contact" method="post" novalidate>
-        <div class="field">
-          <label for="kind">お問い合わせの種類</label>
-          <select id="kind" name="kind" required>
-            {kinds.map((k) => <option value={k}>{k}</option>)}
-          </select>
-        </div>
-        <div class="field">
-          <label for="name">お名前</label>
-          <input id="name" name="name" type="text" maxlength="50" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="email">メールアドレス</label>
-          <input id="email" name="email" type="email" maxlength="254" autocomplete="email" inputmode="email" required />
-        </div>
-        <div class="field">
-          <label for="job">職種（任意）</label>
-          <input id="job" name="job" type="text" maxlength="50" placeholder="理学療法士、看護師、学生など" />
-        </div>
-        <div class="field" data-for="参加申込">
-          <label for="event">参加希望の回（任意）</label>
-          <input id="event" name="event" type="text" maxlength="50" placeholder="第4回 本質観取の会" />
-        </div>
-        <div class="field">
-          <label for="message">内容</label>
-          <textarea id="message" name="message" rows="6" maxlength="2000" required></textarea>
-          <p class="counter"><span id="count">0</span> / 2000</p>
-        </div>
-        <div class="hp" aria-hidden="true">
-          <label for="website">この欄は空のままにしてください</label>
-          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-        {siteKey && <div class="cf-turnstile" data-sitekey={siteKey} data-language="ja"></div>}
-        <p class="mt24">送信内容は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います。</p>
-        <div class="actions">
-          <button class="btn" type="submit" id="submit">送信する</button>
-        </div>
-        <p class="form-status" id="status" role="status" aria-live="polite"></p>
-      </form>
+      <div id="form" class="gform">
+        {formUrl ? (
+          <iframe src={formUrl} title="お問い合わせ・参加申込フォーム" loading="lazy" referrerpolicy="no-referrer">読み込んでいます…</iframe>
+        ) : (
+          <p class="lead tc">フォームは準備中です</p>
+        )}
+      </div>
+      {openUrl && (
+        <p class="mt24 tc">フォームがうまく表示されないときは <a href={openUrl} target="_blank" rel="noopener noreferrer">こちらから開いてください</a></p>
+      )}
+      <p class="mt24">送信内容は <a href="/privacy">プライバシーポリシー</a> に沿って取り扱います。</p>
 
       {sns.length > 0 && (
         <div class="block mt24">
@@ -65,7 +42,4 @@ const kinds = ['参加申込', '会について質問', '取材', '一緒に活�
       )}
     </div>
   </section>
-
-  {siteKey && <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>}
-  <script is:inline src="/js/contact.js" defer></script>
 </Base>

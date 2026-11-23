@@ -253,25 +253,10 @@ section.pt0 { padding-top: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .circle-ill .person, .circle-ill .center-q { animation: none; } }
 
-/* contact form */
-.contact-form { background: var(--white); border-radius: 40px; padding: 44px; border: 2.5px solid var(--ink); margin-top: 40px; }
-.field { margin-bottom: 24px; }
-.field label { display: block; font-weight: 700; margin-bottom: 6px; }
-.field input, .field select, .field textarea {
-  width: 100%; font: inherit; color: var(--ink); background: var(--cream); border: 2px solid var(--line);
-  border-radius: 18px; padding: 12px 18px; line-height: 1.6;
-}
-.field textarea { resize: vertical; min-height: 160px; }
-.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--sky); background: var(--white); }
-.field[hidden] { display: none; }
-.counter { text-align: right; margin: 4px 0 0; color: var(--ink-2); }
-.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
-.btn[disabled] { opacity: 0.6; pointer-events: none; }
-button.btn { border: 0; font-family: inherit; cursor: pointer; }
-.form-status { margin: 20px 0 0; font-weight: 700; white-space: pre-line; }
-.form-status.ok { color: var(--mint-deep, #1f9a73); }
-.form-status.ng { color: #c2410c; }
-@media (max-width: 900px) { .contact-form { padding: 28px 20px; border-radius: 28px; } }
+/* google form */
+.gform { margin-top: 40px; background: var(--white); border-radius: 40px; border: 2.5px solid var(--ink); overflow: hidden; padding: 12px; }
+.gform iframe { display: block; width: 100%; height: 1400px; border: 0; }
+@media (max-width: 900px) { .gform { border-radius: 28px; padding: 4px; } .gform iframe { height: 1600px; } }
 
 /* name and tagline */
 .logo-text { display: flex; flex-direction: column; line-height: 1.3; white-space: nowrap; }
