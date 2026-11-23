@@ -9,7 +9,7 @@ export const SITE = {
   representatives: ['水津 文昭', '舩津 康平'],
   area: '北九州市',
   // お問い合わせ・参加申込の Google フォームの URL（フォームの「送信」→リンクでコピーしたもの）
-  googleFormUrl: '',
+  googleFormUrl: 'https://docs.google.com/forms/d/e/1FAIpQLSe-u3c5k5xkpqLcu-Pn6Oh7UWGZ-tOS2O7V-c5f0vSh8FWwYQ/viewform',
   sns: {
     instagram: '',
     x: '',
