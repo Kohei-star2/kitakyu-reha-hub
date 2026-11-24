@@ -75,3 +75,9 @@ Google フォームを埋め込んでいます。
 - `.env` や鍵ファイルはコミットしないよう `.gitignore` に入れています。キーやパスワードはリポジトリに書かず、必要なら Vercel の環境変数に入れてください。
 - 脆弱性の連絡先を `/.well-known/security.txt` に置いています。有効期限（Expires）が切れる前に1年ごとに更新してください。
 - GitHub アカウントは2段階認証を有効にし、リポジトリの Settings → Code security で Dependabot alerts と Secret scanning をオンにしてください。
+
+## アクセス解析
+
+Vercel Web Analytics を使っています（`src/layouts/Base.astro` の `/_vercel/insights/script.js`）。
+Vercel のプロジェクトの「Analytics」タブで「Enable」を押すと集計が始まり、同じタブで訪問者数やよく見られているページを確認できます。
+Cookie を使わない仕組みなので、同意バナーは不要です。
