@@ -1,0 +1,4 @@
+Contact: https://kitakyu-reha-hub.vercel.app/contact
+Expires: 2027-11-24T00:00:00.000Z
+Preferred-Languages: ja, en
+Canonical: https://kitakyu-reha-hub.vercel.app/.well-known/security.txt
