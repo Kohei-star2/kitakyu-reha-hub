@@ -37,12 +37,13 @@ import Face from '../components/Face.astro';
       <div class="block" id="logo">
         <h2>ロゴに込めた意味</h2>
         <div class="logo-meaning">
-          <img class="logo-big" src="/images/logo-512.png" width="512" height="512" alt="北九州リハビリテーションハブ研究会のロゴ。黄色く光る中心を、青と緑の渦と3本の道が囲む円形のマーク" loading="lazy" />
+          <img class="logo-big" src="/images/logo-512.png" width="512" height="512" alt="北九州リハビリテーションハブ研究会のロゴ。金色の光へと曲線の道が続き、青い山並みとともに、筆で描いた閉じていない円が囲むマーク" loading="lazy" />
           <dl class="meanings">
-            <div><dt><span class="dot dot-light"></span>中心の光</dt><dd>本質観取によって見いだされる「本質」と「共通了解」</dd></div>
-            <div><dt><span class="dot dot-swirl"></span>中心を囲む渦</dt><dd>問いを重ね、対話を通して理解を深めていく過程</dd></div>
-            <div><dt><span class="dot dot-path"></span>3本の道</dt><dd>異なる専門性、経験、立場、価値観を持つ人々</dd></div>
-            <div><dt><span class="dot dot-ring"></span>円環の形</dt><dd>人と人が対等につながる「ハブ」の機能</dd></div>
+            <div><dt><span class="dot dot-light"></span>中央の金色の光</dt><dd>本質観取によって見いだされる本質と共通了解。誰かが与える正解ではなく、対話によって共に見いだす理解</dd></div>
+            <div><dt><span class="dot dot-path"></span>光へと続く曲線</dt><dd>問い、考え、対話しながら本質を探究する過程。一直線ではない思考の道のり</dd></div>
+            <div><dt><span class="dot dot-swirl"></span>重なり合う青い山並み</dt><dd>人それぞれが持つ異なる経験、背景、価値観。重なり合う青い曲線として、多様な視点が対話を通じて交わり、新たな理解へとつながる姿でもあります</dd></div>
+            <div><dt><span class="dot dot-ring"></span>外側の円環</dt><dd>人と人、知識と経験、異なる立場をつなぐ「ハブ」としての役割</dd></div>
+            <div><dt><span class="dot dot-open"></span>閉じていない円</dt><dd>既存の価値観や結論に固執せず、新しい問いや多様な考えを受け入れる開放性</dd></div>
           </dl>
         </div>
       </div>
@@ -67,7 +68,7 @@ import Face from '../components/Face.astro';
         <div class="people">
           {SITE.representatives.map((name, i) => (
             <div class="person">
-              <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill={i === 0 ? '#d6eef8' : '#d8f3e8'} /><Face color={i === 0 ? '#3ba9d9' : '#5cc6a7'} hair="short" /></svg>
+              <svg viewBox="-60 -60 120 130" aria-hidden="true"><circle cx="0" cy="5" r="58" fill={i === 0 ? '#dcebef' : '#e6efe8'} /><Face color={i === 0 ? '#2e7d9a' : '#7fb3a0'} hair="short" /></svg>
               <h3>{name}</h3>
               <p>共同代表</p>
               <p>プロフィールは準備中です</p>
