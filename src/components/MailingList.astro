@@ -1,0 +1,17 @@
+---
+import { SITE, safeUrl } from '../site.config';
+const url = safeUrl(SITE.googleGroupUrl);
+---
+{url && (
+  <div class="mlist">
+    <div>
+      <h3>開催案内をメールで受け取る</h3>
+      <p>次の会の日程やテーマが決まったら、メーリングリストでお知らせします。届くのは運営からのお知らせだけで、ほかの登録者のアドレスは見えません。</p>
+      <p class="mlist-note">Googleアカウントをお持ちでない方は、申込フォームの「開催案内のメール」にチェックしていただければ運営が登録します。</p>
+    </div>
+    <div class="mlist-actions">
+      <a class="btn" href={url} target="_blank" rel="noopener noreferrer">メーリングリストに登録</a>
+      <a class="btn btn-ghost" href="/contact#form">フォームから登録</a>
+    </div>
+  </div>
+)}

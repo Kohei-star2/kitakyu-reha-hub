@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import EventCard from '../../components/EventCard.astro';
 import { getUpcoming } from '../../lib/events';
+import MailingList from '../../components/MailingList.astro';
 const upcoming = await getUpcoming();
 ---
 <Base title="開催案内" description="本質観取の会の開催日時、場所、テーマと申込方法のご案内です。">
@@ -14,6 +15,7 @@ const upcoming = await getUpcoming();
       ) : (
         <p class="lead">いま募集中の会はありません。次回の日程は決まり次第お知らせします</p>
       )}
+      <MailingList />
     </div>
   </section>
 

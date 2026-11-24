@@ -6,6 +6,7 @@ import Face from '../components/Face.astro';
 import { getUpcoming, getPast, formatDate, bigDate, questionLabel } from '../lib/events';
 import { SITE } from '../site.config';
 import Photo from '../components/Photo.astro';
+import MailingList from '../components/MailingList.astro';
 
 const upcoming = await getUpcoming();
 const next = upcoming[0];
@@ -51,6 +52,7 @@ const reports = (await getPast()).slice(0, 4);
         <p class="lead tc">次回の日程は決まり次第お知らせします。</p>
       )}
       {upcoming.length > 1 && <div class="actions center-actions"><a href="/events" class="btn btn-ghost">ほかの日程も見る</a></div>}
+      <MailingList />
     </div>
   </section>
 

@@ -303,3 +303,12 @@ section.pt0 { padding-top: 0; }
   .meanings { justify-self: stretch; }
 }
 .footer-logo-link { display: inline-block; }
+
+/* mailing list */
+.mlist { margin-top: 48px; display: grid; grid-template-columns: 1fr auto; gap: 28px; align-items: center; background: var(--sky-soft); border-radius: 40px; padding: 36px 40px; }
+.mlist h3 { font-size: 1.4rem; margin-bottom: 6px; }
+.mlist p { margin: 0 0 8px; }
+.mlist .mlist-note { color: var(--ink-2); margin: 0; }
+.mlist-actions { display: flex; flex-direction: column; gap: 18px; }
+.mlist-actions .btn { text-align: center; }
+@media (max-width: 900px) { .mlist { grid-template-columns: 1fr; padding: 28px 22px; border-radius: 28px; } }
