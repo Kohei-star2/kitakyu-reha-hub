@@ -1,7 +1,7 @@
 ---
 // やわらかい線画の人物（頭と肩）。x, y は肩の中心あたり
 interface Props { x?: number; y?: number; color?: string; hair?: 'short' | 'long' | 'bun' | 'none'; cls?: string; }
-const { x = 0, y = 0, color = '#2e7d9a', hair = 'short', cls = '' } = Astro.props;
+const { x = 0, y = 0, color = '#3182a0', hair = 'short', cls = '' } = Astro.props;
 const ink = '#2b3a40';
 ---
 <g transform={`translate(${x} ${y})`}>
